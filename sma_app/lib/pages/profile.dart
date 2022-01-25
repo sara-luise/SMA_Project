@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/flutter_tags.dart';
+import 'package:intl/intl.dart';
 import 'package:sma_app/colors.dart';
 import 'package:sma_app/components/clipImage.dart';
-import 'package:sma_app/components/tag.dart';
+import 'package:sma_app/models/tagable.dart';
+import 'package:sma_app/services/userservice.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final userservice = UserService();
+    final user = userservice.getUserById(0);
+    String x = "";
     return Container(
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +28,7 @@ class Profile extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Text(
-                  "Reiner Zufall",
+                  user.firstName + " "+ user.lastName,
                   style: TextStyle(color: headerColor, fontSize: 30),
                   softWrap: true,
                 ),
@@ -41,44 +48,73 @@ class Profile extends StatelessWidget {
             ],
           ),
           header("eigene Beschreibung"),
-          body(
-              "Schlafe, mein Prinzchen, es ruhn Schäfchen und Vögelchen nun. Garten und Wiese verstummt, Auch nicht ein Bienchen mehr summt; Luna mit silbernem Schein Gucket zum Fenster herein."
-              "Schlafe beim silbernen Schein, Schlafe, mein Prinzchen, schlaf' ein! Schlaf' ein, schlaf 'ein!"),
-          header("Tags"),
-          Wrap(
-            children: [
-              tag("Tanzen", Colors.lightGreen[400]!),
-              tag("Fußball", Colors.lightGreen[400]!),
-              tag("Eislaufen", Colors.lightGreen[400]!),
-              tag("Skiifahren", Colors.lightGreen[400]!),
-              tag("Volleayball", Colors.lightGreen[400]!),
-              tag("lesen", Colors.orange[300]!),
-              tag("Klavir spielen", Colors.orange[300]!),
-              tag("singen", Colors.orange[300]!),
-              tag("klein", Colors.indigo[300]!),
-              tag("süß", Colors.indigo[300]!),
-              tag("liebenswürdig", Colors.indigo[300]!),
-            ],
-          ),
+          body(user.description),
+          header("Hobbys"),
+          generateHobbyTags(),
+          header("Eigenschaften"),
+          generateAttributeTags(),
+          header("Skills"),
+          generateSkillTags(),
           header("Geburtsdatum"),
-          body("10. Dezember 1997"),
+          body(convertDateToLocalString(user.dateOfBirth)),
           header("Wohnort"),
-          body("Hagenberg im Mühlkreis"),
+          body(user.hometown),
           header("Geschlecht"),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
             child: Row(
               children: const [
                 Icon(Icons.male),
-                Text("männlich",
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
+                Text("männlich", //TODO: auf user.sex umändern --> geht nicht weil String nullable type und const (Lösung noch zu finden)
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
               ],
             ),
           )
         ],
       ),
     ));
+  }
+
+  String convertDateToLocalString(DateTime date){
+    final DateFormat formatter = DateFormat('dd.MM.yyyy');
+    return formatter.format(date);
+  }
+
+  Container generateHobbyTags() {
+    return createTagList(UserService().getUserById(0).hobbies);
+  }
+
+  Container generateAttributeTags() {
+    return createTagList(UserService().getUserById(0).attributes);
+  }
+
+  Container generateSkillTags() {
+    return createTagList(UserService().getUserById(0).skills);
+  }
+
+  Container createTagList(List<TagAble> tags){
+    return Container(
+      alignment: Alignment.topLeft,
+      child: Tags(
+        alignment: WrapAlignment.center,
+        itemCount: tags.length,
+        itemBuilder: (index) {
+          return ItemTags(
+            index: index,
+            title: tags[index].value,
+            color: Colors.blue,
+            activeColor: tags[index].color,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            elevation: 0.0,
+            // borderRadius: BorderRadius.all(Radius.circular(7.0)),
+            textColor: Colors.white,
+            textActiveColor: Colors.white,
+            textOverflow: TextOverflow.ellipsis,
+          );
+        },
+      ),
+    );
   }
 
   Padding body(String text) {
