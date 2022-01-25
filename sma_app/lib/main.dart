@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sma_app/pages/home.dart';
 
@@ -18,28 +20,11 @@ ThemeData _buildPixelMatchTheme() {
 }
 
 TextTheme _buildPixelMatchTextTheme(TextTheme base) {
-  return base
-      .copyWith(
-        headline5: base.headline5!.copyWith(
-          fontWeight: FontWeight.w500,
-        ),
-        headline6: base.headline6!.copyWith(
-          fontSize: 18.0,
-        ),
-        caption: base.caption!.copyWith(
-          fontWeight: FontWeight.w400,
-          fontSize: 12.0,
-        ),
-        bodyText1: base.bodyText1!.copyWith(
-          fontWeight: FontWeight.w500,
-          fontSize: 16.0,
-        ),
-      )
-      .apply(
-        fontFamily: 'Rubik',
-        displayColor: pmSurfaceWhite,
-        bodyColor: pmGrey400,
-      );
+  return base.apply(
+    fontFamily: 'Rubik',
+    displayColor: pmSurfaceWhite,
+    bodyColor: Colors.black,
+  );
 }
 
 ColorScheme _pixelMatchColorScheme = ColorScheme(
