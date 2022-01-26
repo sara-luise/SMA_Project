@@ -22,9 +22,9 @@ class _HomeState extends State<Home> {
           child: IndexedStack(
             index: _currentIndex,
             children: const [
-              Profile(),
               Match(),
               Contacts(),
+              Profile(),
             ],
           ),
         ),
