@@ -1,28 +1,50 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sma_app/colors.dart';
+import 'package:sma_app/pages/authentication.dart';
 import 'package:sma_app/pages/chat.dart';
+import 'package:sma_app/pages/home.dart';
 import 'package:sma_app/pages/matching.dart';
 import 'package:sma_app/services/authservice.dart';
 import 'package:sma_app/wrapper.dart';
 
-void main() => runApp(Pixxle());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(Pixxle());
+} 
 
 class Pixxle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: buildPixelMatchTheme(),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => StreamProvider<bool>.value(
-              initialData: false,
-              value: AuthService().stuff,
-              child: const Wrapper()),
-          '/matching': (context) => const Matching(),
-          '/chat': (context) => const Chat(),
-        });
+    return FutureBuilder(
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return Center(child: CircularProgressIndicator());
+        }
+        else if(snapshot.hasData){
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: buildPixelMatchTheme(),
+            initialRoute: '/',
+            routes: {
+              '/': (context) => const Home(),
+              '/matching': (context) => const Matching(),
+              '/chat': (context) => const Chat(),
+            }
+          );
+        }
+        else if(snapshot.hasError){
+          return Center(child: Text("Something Went Wrong!"));
+        }
+        else{
+          return Authenticate();
+        }
+      },
+    );
   }
 }
 

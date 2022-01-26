@@ -4,6 +4,7 @@ import 'package:sma_app/colors.dart';
 import 'package:sma_app/components/clipImage.dart';
 import 'package:sma_app/components/tag.dart';
 import 'package:sma_app/models/tagable.dart';
+import 'package:sma_app/services/authservice.dart';
 import 'package:sma_app/services/userservice.dart';
 
 class Profile extends StatelessWidget {
@@ -69,7 +70,14 @@ class Profile extends StatelessWidget {
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
               ],
             ),
-          )
+          ),
+          TextButton(
+            onPressed: () async {
+              print("logout");
+              await AuthService().logout();
+            },
+            child: Text("Logout")
+            ),
         ],
       ),
     ));

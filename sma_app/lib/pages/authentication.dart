@@ -85,10 +85,11 @@ class AuthenticateState extends State<Authenticate> {
                       color: Colors.blue
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     print(usernameController.text);
                     print(passwordController.text);
-                    authService.login(usernameController.text, passwordController.text);
+                    // authService.login(usernameController.text, passwordController.text);
+                    await authService.signInAnon();
                   },
                 )
             ),

@@ -3,7 +3,7 @@ import 'package:sma_app/models/tagable.dart';
 import 'package:sma_app/models/user.dart';
 
 class UserService {
-  List<User> users = [];
+  List<SMAUser> users = [];
   UserService(){
     createUsers();
   }
@@ -39,11 +39,11 @@ class UserService {
   }
 
   createUsers(){
-    users.add(User(createHobbies(), "Reiner", "Zufall", "Schlafe, mein Prinzchen, es ruhn Schäfchen und Vögelchen nun. Garten und Wiese verstummt, Auch nicht ein Bienchen mehr summt; Luna mit silbernem Schein Gucket zum Fenster herein."
+    users.add(SMAUser(createHobbies(), "Reiner", "Zufall", "Schlafe, mein Prinzchen, es ruhn Schäfchen und Vögelchen nun. Garten und Wiese verstummt, Auch nicht ein Bienchen mehr summt; Luna mit silbernem Schein Gucket zum Fenster herein."
               "Schlafe beim silbernen Schein, Schlafe, mein Prinzchen, schlaf' ein! Schlaf' ein, schlaf 'ein!", DateTime(1997, 12, 10), "Hagenberg", 1, createAttributes(), createSkills(), "männlich"));
   }
 
-  User getUserById(int index){
+  SMAUser getUserById(int index){
     return users[index];
   }
 }
