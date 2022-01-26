@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'package:intl/intl.dart';
 import 'package:sma_app/colors.dart';
 import 'package:sma_app/components/clipImage.dart';
+import 'package:sma_app/components/tag.dart';
 import 'package:sma_app/models/tagable.dart';
 import 'package:sma_app/services/userservice.dart';
 
@@ -14,7 +14,7 @@ class Profile extends StatelessWidget {
 
     final userservice = UserService();
     final user = userservice.getUserById(0);
-    String x = "";
+    List<TagAble> testData = userservice.createHobbies();
     return Container(
       child: SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 18),
@@ -28,7 +28,7 @@ class Profile extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Text(
-                  user.firstName + " "+ user.lastName,
+                  user.firstName + " " + user.lastName,
                   style: TextStyle(color: headerColor, fontSize: 30),
                   softWrap: true,
                 ),
@@ -50,11 +50,11 @@ class Profile extends StatelessWidget {
           header("eigene Beschreibung"),
           body(user.description),
           header("Hobbys"),
-          generateHobbyTags(),
+          createTagList(user.hobbies),
           header("Eigenschaften"),
-          generateAttributeTags(),
+          createTagList(user.attributes),
           header("Skills"),
-          generateSkillTags(),
+          createTagList(user.skills),
           header("Geburtsdatum"),
           body(convertDateToLocalString(user.dateOfBirth)),
           header("Wohnort"),
@@ -63,9 +63,9 @@ class Profile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
             child: Row(
-              children: const [
+              children: [
                 Icon(Icons.male),
-                Text("männlich", //TODO: auf user.sex umändern --> geht nicht weil String nullable type und const (Lösung noch zu finden)
+                Text(user.sex,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
               ],
             ),
@@ -80,40 +80,9 @@ class Profile extends StatelessWidget {
     return formatter.format(date);
   }
 
-  Container generateHobbyTags() {
-    return createTagList(UserService().getUserById(0).hobbies);
-  }
-
-  Container generateAttributeTags() {
-    return createTagList(UserService().getUserById(0).attributes);
-  }
-
-  Container generateSkillTags() {
-    return createTagList(UserService().getUserById(0).skills);
-  }
-
-  Container createTagList(List<TagAble> tags){
-    return Container(
-      alignment: Alignment.topLeft,
-      child: Tags(
-        alignment: WrapAlignment.center,
-        itemCount: tags.length,
-        itemBuilder: (index) {
-          return ItemTags(
-            index: index,
-            title: tags[index].value,
-            color: Colors.blue,
-            activeColor: tags[index].color,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            elevation: 0.0,
-            // borderRadius: BorderRadius.all(Radius.circular(7.0)),
-            textColor: Colors.white,
-            textActiveColor: Colors.white,
-            textOverflow: TextOverflow.ellipsis,
-          );
-        },
-      ),
+  Wrap createTagList(List<TagAble> tags){
+    return Wrap(
+      children: tags.map((tagable) => tag(tagable.value, tagable.color)).toList(),
     );
   }
 

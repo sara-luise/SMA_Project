@@ -14,7 +14,6 @@ class UserService {
 
   List<TagAble> createHobbies(){
     List<TagAble> hobbies = [];
-    hobbies.add(TagAble("Tanzen", Colors.lightGreen[300]!));
     hobbies.add(TagAble("Tanzen", Colors.lightGreen[400]!));
     hobbies.add(TagAble("Fußball", Colors.lightGreen[400]!));
     hobbies.add(TagAble("Eislaufen", Colors.lightGreen[400]!));
