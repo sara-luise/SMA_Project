@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sma_app/pages/chat.dart';
 import 'package:sma_app/pages/contacts.dart';
 import 'package:sma_app/pages/home.dart';
 import 'package:sma_app/pages/matching.dart';
@@ -7,10 +8,11 @@ void main() {
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: buildPixelMatchTheme(),
-      initialRoute: '/',
+      initialRoute: '/chat',
       routes: {
         '/': (context) => const Home(),
         '/matching': (context) => const Matching(),
+        '/chat': (context) => const Chat(),
       }));
 }
 
@@ -31,7 +33,7 @@ TextTheme _buildPixelMatchTextTheme(TextTheme base) {
 }
 
 ColorScheme _pixelMatchColorScheme = ColorScheme(
-  primary: pmBlue50,
+  primary: pmBlue300,
   primaryVariant: pmBlue200,
   secondary: pmGrey300,
   secondaryVariant: pmGrey400,
@@ -46,7 +48,7 @@ ColorScheme _pixelMatchColorScheme = ColorScheme(
   brightness: Brightness.light,
 );
 
-Color pmBlue50 = Colors.blue[50]!;
+Color pmBlue300 = Colors.blue[300]!;
 Color pmGrey300 = Colors.grey[300]!;
 
 Color pmBlue200 = Colors.blue[200]!;
