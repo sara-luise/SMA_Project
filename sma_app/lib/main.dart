@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sma_app/colors.dart';
 import 'package:sma_app/pages/chat.dart';
-import 'package:sma_app/pages/contacts.dart';
-import 'package:sma_app/pages/home.dart';
 import 'package:sma_app/pages/matching.dart';
+import 'package:sma_app/services/authservice.dart';
+import 'package:sma_app/wrapper.dart';
 
-void main() {
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: buildPixelMatchTheme(),
-      initialRoute: '/chat',
-      routes: {
-        '/': (context) => const Home(),
-        '/matching': (context) => const Matching(),
-        '/chat': (context) => const Chat(),
-      }));
+void main() => runApp(Pixxle());
+
+class Pixxle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: buildPixelMatchTheme(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => StreamProvider<bool>.value(
+              initialData: false,
+              value: AuthService().stuff,
+              child: const Wrapper()),
+          '/matching': (context) => const Matching(),
+          '/chat': (context) => const Chat(),
+        });
+  }
 }
 
 ThemeData buildPixelMatchTheme() {
@@ -33,7 +43,7 @@ TextTheme _buildPixelMatchTextTheme(TextTheme base) {
 }
 
 ColorScheme _pixelMatchColorScheme = ColorScheme(
-  primary: pmBlue300,
+  primary: pmBlue200,
   primaryVariant: pmBlue200,
   secondary: pmGrey300,
   secondaryVariant: pmGrey400,
@@ -47,16 +57,3 @@ ColorScheme _pixelMatchColorScheme = ColorScheme(
   onError: pmSurfaceWhite,
   brightness: Brightness.light,
 );
-
-Color pmBlue300 = Colors.blue[300]!;
-Color pmGrey300 = Colors.grey[300]!;
-
-Color pmBlue200 = Colors.blue[200]!;
-Color pmGrey400 = Colors.grey[400]!;
-
-Color pmErrorRed = Colors.red[900]!;
-
-Color pmSurfaceWhite = Colors.white;
-Color pmBackgroundWhite = Colors.grey[50]!;
-
-const defaultLetterSpacing = 0.03;

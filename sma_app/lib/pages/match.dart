@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sma_app/colors.dart';
 import 'package:sma_app/components/matchCard.dart';
 import 'package:sma_app/main.dart';
 import 'package:sma_app/pages/matching.dart';

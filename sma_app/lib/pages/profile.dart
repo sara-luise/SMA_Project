@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sma_app/colors.dart';
 import 'package:sma_app/components/clipImage.dart';
 import 'package:sma_app/components/tag.dart';
+import 'package:sma_app/models/tagable.dart';
+import 'package:sma_app/services/userservice.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final userservice = UserService();
+    final user = userservice.getUserById(0);
+    List<TagAble> testData = userservice.createHobbies();
     return Container(
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +28,7 @@ class Profile extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Text(
-                  "Reiner Zufall",
+                  user.firstName + " " + user.lastName,
                   style: TextStyle(color: headerColor, fontSize: 30),
                   softWrap: true,
                 ),
@@ -41,44 +48,42 @@ class Profile extends StatelessWidget {
             ],
           ),
           header("eigene Beschreibung"),
-          body(
-              "Schlafe, mein Prinzchen, es ruhn Schäfchen und Vögelchen nun. Garten und Wiese verstummt, Auch nicht ein Bienchen mehr summt; Luna mit silbernem Schein Gucket zum Fenster herein."
-              "Schlafe beim silbernen Schein, Schlafe, mein Prinzchen, schlaf' ein! Schlaf' ein, schlaf 'ein!"),
-          header("Tags"),
-          Wrap(
-            children: [
-              tag("Tanzen", Colors.lightGreen[400]!),
-              tag("Fußball", Colors.lightGreen[400]!),
-              tag("Eislaufen", Colors.lightGreen[400]!),
-              tag("Skiifahren", Colors.lightGreen[400]!),
-              tag("Volleayball", Colors.lightGreen[400]!),
-              tag("lesen", Colors.orange[300]!),
-              tag("Klavir spielen", Colors.orange[300]!),
-              tag("singen", Colors.orange[300]!),
-              tag("klein", Colors.indigo[300]!),
-              tag("süß", Colors.indigo[300]!),
-              tag("liebenswürdig", Colors.indigo[300]!),
-            ],
-          ),
+          body(user.description),
+          header("Hobbys"),
+          createTagList(user.hobbies),
+          header("Eigenschaften"),
+          createTagList(user.attributes),
+          header("Skills"),
+          createTagList(user.skills),
           header("Geburtsdatum"),
-          body("10. Dezember 1997"),
+          body(convertDateToLocalString(user.dateOfBirth)),
           header("Wohnort"),
-          body("Hagenberg im Mühlkreis"),
+          body(user.hometown),
           header("Geschlecht"),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
             child: Row(
-              children: const [
+              children: [
                 Icon(Icons.male),
-                Text("männlich",
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
+                Text(user.sex,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
               ],
             ),
           )
         ],
       ),
     ));
+  }
+
+  String convertDateToLocalString(DateTime date){
+    final DateFormat formatter = DateFormat('dd.MM.yyyy');
+    return formatter.format(date);
+  }
+
+  Wrap createTagList(List<TagAble> tags){
+    return Wrap(
+      children: tags.map((tagable) => tag(tagable.value, tagable.color)).toList(),
+    );
   }
 
   Padding body(String text) {
