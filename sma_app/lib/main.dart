@@ -19,63 +19,8 @@ void main() async {
 class Pixxle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(),
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.waiting){
-          return Center(child: CircularProgressIndicator());
-        }
-        else if(snapshot.hasData){
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: buildPixelMatchTheme(),
-            initialRoute: '/',
-            routes: {
-              '/': (context) => const Home(),
-              '/matching': (context) => const Matching(),
-              '/chat': (context) => const Chat(),
-            }
-          );
-        }
-        else if(snapshot.hasError){
-          return Center(child: Text("Something Went Wrong!"));
-        }
-        else{
-          return Authenticate();
-        }
-      },
+    return MaterialApp(
+      home: Wrapper()
     );
   }
 }
-
-ThemeData buildPixelMatchTheme() {
-  final ThemeData base = ThemeData.light();
-  return base.copyWith(
-    colorScheme: _pixelMatchColorScheme,
-    textTheme: _buildPixelMatchTextTheme(base.textTheme),
-  );
-}
-
-TextTheme _buildPixelMatchTextTheme(TextTheme base) {
-  return base.apply(
-    fontFamily: 'Rubik',
-    displayColor: pmSurfaceWhite,
-    bodyColor: Colors.black,
-  );
-}
-
-ColorScheme _pixelMatchColorScheme = ColorScheme(
-  primary: pmBlue200,
-  primaryVariant: pmBlue200,
-  secondary: pmGrey300,
-  secondaryVariant: pmGrey400,
-  surface: pmSurfaceWhite,
-  background: pmBackgroundWhite,
-  error: pmErrorRed,
-  onPrimary: pmBlue200,
-  onSecondary: pmGrey400,
-  onSurface: pmGrey400,
-  onBackground: pmGrey400,
-  onError: pmSurfaceWhite,
-  brightness: Brightness.light,
-);
