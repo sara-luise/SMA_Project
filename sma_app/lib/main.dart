@@ -1,14 +1,27 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sma_app/pages/home.dart';
+import 'package:sma_app/services/authservice.dart';
+import 'package:sma_app/wrapper.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: _buildPixelMatchTheme(),
-    home: Home(),
-  ));
+void main() => runApp(Pixxle());
+
+class Pixxle extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context){
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: _buildPixelMatchTheme(),
+      home: StreamProvider<bool>.value(
+        initialData: false,
+        value: AuthService().stuff,
+        child: const Wrapper()
+      ),
+    );
+  }
 }
 
 ThemeData _buildPixelMatchTheme() {
