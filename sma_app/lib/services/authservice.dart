@@ -4,17 +4,17 @@ class AuthService {
   late User currentUser;
   bool loggedIn = false;
 
-  bool isLoggedIn(){
+  bool isLoggedIn() {
     return loggedIn;
   }
 
   Stream<bool> get stuff async* {
     await Future.delayed(Duration(seconds: 1));
     print("Status: " + loggedIn.toString());
-    yield loggedIn;
+    yield true;
   }
 
-  login(String username, String password){
+  login(String username, String password) {
     loggedIn = true;
   }
 }

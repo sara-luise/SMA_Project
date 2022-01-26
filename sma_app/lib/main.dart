@@ -1,30 +1,32 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sma_app/pages/home.dart';
+import 'package:sma_app/colors.dart';
+import 'package:sma_app/pages/chat.dart';
+import 'package:sma_app/pages/matching.dart';
 import 'package:sma_app/services/authservice.dart';
 import 'package:sma_app/wrapper.dart';
 
 void main() => runApp(Pixxle());
 
 class Pixxle extends StatelessWidget {
-
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: _buildPixelMatchTheme(),
-      home: StreamProvider<bool>.value(
-        initialData: false,
-        value: AuthService().stuff,
-        child: const Wrapper()
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: buildPixelMatchTheme(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => StreamProvider<bool>.value(
+              initialData: false,
+              value: AuthService().stuff,
+              child: const Wrapper()),
+          '/matching': (context) => const Matching(),
+          '/chat': (context) => const Chat(),
+        });
   }
 }
 
-ThemeData _buildPixelMatchTheme() {
+ThemeData buildPixelMatchTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
     colorScheme: _pixelMatchColorScheme,
@@ -41,30 +43,17 @@ TextTheme _buildPixelMatchTextTheme(TextTheme base) {
 }
 
 ColorScheme _pixelMatchColorScheme = ColorScheme(
-  primary: pmBlue50,
-  primaryVariant: pmBlue100,
+  primary: pmBlue200,
+  primaryVariant: pmBlue200,
   secondary: pmGrey300,
-  secondaryVariant: pmBlue100,
+  secondaryVariant: pmGrey400,
   surface: pmSurfaceWhite,
   background: pmBackgroundWhite,
   error: pmErrorRed,
-  onPrimary: pmBlue100,
+  onPrimary: pmBlue200,
   onSecondary: pmGrey400,
   onSurface: pmGrey400,
   onBackground: pmGrey400,
   onError: pmSurfaceWhite,
   brightness: Brightness.light,
 );
-
-Color pmBlue50 = Colors.blue[50]!;
-Color pmGrey300 = Colors.grey[300]!;
-
-Color pmBlue100 = Colors.blue[100]!;
-Color pmGrey400 = Colors.grey[400]!;
-
-Color pmErrorRed = Colors.red[900]!;
-
-Color pmSurfaceWhite = Colors.white;
-Color pmBackgroundWhite = Colors.grey[50]!;
-
-const defaultLetterSpacing = 0.03;
