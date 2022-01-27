@@ -1,6 +1,6 @@
 import 'package:sma_app/models/tagable.dart';
 
-class User {
+class SMAUser {
   final int id;
   final String firstName;
   final String lastName;
@@ -12,5 +12,5 @@ class User {
   final List<TagAble> skills;
   final String sex;
 
-  User(this.hobbies, this.firstName, this.lastName, this.description, this.dateOfBirth, this.hometown, this.id, this.attributes, this.skills, this.sex);
+  SMAUser(this.hobbies, this.firstName, this.lastName, this.description, this.dateOfBirth, this.hometown, this.id, this.attributes, this.skills, this.sex);
 }

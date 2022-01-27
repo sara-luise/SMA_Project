@@ -4,6 +4,7 @@ import 'package:sma_app/colors.dart';
 import 'package:sma_app/components/clipImage.dart';
 import 'package:sma_app/components/tag.dart';
 import 'package:sma_app/models/tagable.dart';
+import 'package:sma_app/services/authservice.dart';
 import 'package:sma_app/services/userservice.dart';
 
 class Profile extends StatelessWidget {
@@ -12,8 +13,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userservice = UserService();
-    final user = userservice.getUserById(0);
-    List<TagAble> testData = userservice.createHobbies();
+    final user = userservice.currentUser();
     return Container(
         child: SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 18),
@@ -70,7 +70,13 @@ class Profile extends StatelessWidget {
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
               ],
             ),
-          )
+          ),
+          TextButton(
+            onPressed: () async {
+              await AuthService().logout();
+            },
+            child: Text("Logout")
+            ),
         ],
       ),
     ));

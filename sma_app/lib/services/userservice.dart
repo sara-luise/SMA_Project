@@ -3,14 +3,11 @@ import 'package:sma_app/models/tagable.dart';
 import 'package:sma_app/models/user.dart';
 
 class UserService {
-  List<User> users = [];
+  List<SMAUser> users = [];
   UserService(){
     createUsers();
   }
 
-  // User createUser(){
-  //   return User()
-  // }
 
   List<TagAble> createHobbies(){
     List<TagAble> hobbies = [];
@@ -39,11 +36,28 @@ class UserService {
   }
 
   createUsers(){
-    users.add(User(createHobbies(), "Reiner", "Zufall", "Schlafe, mein Prinzchen, es ruhn Schäfchen und Vögelchen nun. Garten und Wiese verstummt, Auch nicht ein Bienchen mehr summt; Luna mit silbernem Schein Gucket zum Fenster herein."
+    users.add(SMAUser(createHobbies(), "Reiner", "Zufall", "Schlafe, mein Prinzchen, es ruhn Schäfchen und Vögelchen nun. Garten und Wiese verstummt, Auch nicht ein Bienchen mehr summt; Luna mit silbernem Schein Gucket zum Fenster herein."
               "Schlafe beim silbernen Schein, Schlafe, mein Prinzchen, schlaf' ein! Schlaf' ein, schlaf 'ein!", DateTime(1997, 12, 10), "Hagenberg", 1, createAttributes(), createSkills(), "männlich"));
+    users.add(SMAUser(createHobbies(), "Max", "Mustermann", "Guten Tag i bims", DateTime(1997, 12, 10), "Hagenberg", 2, createAttributes(), createSkills(), "männlich"));
+    users.add(SMAUser(createHobbies(), "Max", "Mustermäx", "Guten Tag i bims hier", DateTime(1997, 12, 10), "Hagenberg", 3, createAttributes(), createSkills(), "männlich"));
+    users.add(SMAUser(createHobbies(), "Alfred", "Baumschule", "Wos mochst du heid so außer an schlechten Eindruck?", DateTime(1997, 12, 10), "Hagenberg", 4, createAttributes(), createSkills(), "männlich"));
   }
 
-  User getUserById(int index){
-    return users[index];
+  SMAUser currentUser(){
+    return users[0];
+  }
+
+  List<SMAUser> getUsers(){
+    return users.skip(1).toList();
+  }
+
+  SMAUser getUserById(int id){
+    for(var user in users){
+      if(user.id == id){
+        return user;
+      }
+    }
+
+    return currentUser();
   }
 }

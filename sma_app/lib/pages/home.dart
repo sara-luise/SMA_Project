@@ -45,6 +45,7 @@ class _HomeState extends State<Home> {
           elevation: 0,
           onTap: (value) {
             // Respond to item press.
+            print("index");
             setState(() => _currentIndex = value);
           },
           items: const [

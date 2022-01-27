@@ -1,20 +1,29 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sma_app/models/user.dart';
 
-class AuthService {
-  late User currentUser;
-  bool loggedIn = false;
+class AuthService extends ChangeNotifier{
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  bool isLoggedIn() {
-    return loggedIn;
+  Stream<User?> get onAuthStateChanged => _auth.authStateChanges();
+
+  Future signInAnon() async {
+    try{
+      UserCredential userCredential = await _auth.signInAnonymously();
+      User? user = userCredential.user;
+
+      notifyListeners();
+      return user;
+    }
+    catch(e){
+      print(e.toString());
+      return null;
+    }
   }
 
-  Stream<bool> get stuff async* {
-    await Future.delayed(Duration(seconds: 1));
-    print("Status: " + loggedIn.toString());
-    yield true;
-  }
-
-  login(String username, String password) {
-    loggedIn = true;
+  logout() async {
+    await _auth.signOut();
+    notifyListeners();
   }
 }
