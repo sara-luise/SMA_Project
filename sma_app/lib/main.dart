@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sma_app/colors.dart';
 import 'package:sma_app/pages/chat.dart';
+import 'package:sma_app/pages/home.dart';
 import 'package:sma_app/pages/matching.dart';
 import 'package:sma_app/services/authservice.dart';
 import 'package:sma_app/wrapper.dart';
@@ -16,10 +17,12 @@ class Pixxle extends StatelessWidget {
         theme: buildPixelMatchTheme(),
         initialRoute: '/',
         routes: {
-          '/': (context) => StreamProvider<bool>.value(
+          '/': (context) => const Home(),
+          /*(context) => StreamProvider<bool>.value(
               initialData: false,
               value: AuthService().stuff,
-              child: const Wrapper()),
+              child: const Wrapper()),*/
+
           '/matching': (context) => const Matching(),
           '/chat': (context) => const Chat(),
         });
