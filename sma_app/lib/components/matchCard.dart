@@ -13,10 +13,11 @@ class MatchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     SMAUser user = UserService().getUserById(this.userId);
     return SizedBox(
-      width: 160,
+      width: 140,
+      height: 180,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/chat');
+          Navigator.pushNamed(context, '/chat', arguments: user.id);
         },
         child: Card(
           child: Padding(

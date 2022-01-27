@@ -82,7 +82,7 @@ class AuthenticateState extends State<Authenticate> {
                   child: const Text(
                     'Anmelden',
                     style: TextStyle(
-                      color: Colors.blue
+                      color: Colors.white
                     ),
                   ),
                   onPressed: () async {
