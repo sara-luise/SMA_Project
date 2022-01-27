@@ -40,10 +40,7 @@ displayMatches(List<SMAUser> users, context){
       height: 189,
       child: OutlinedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const Matching()),
-            );
+            Navigator.pushNamed(context, '/matching');
           },
           style: ButtonStyle(
               side: MaterialStateProperty.all(
@@ -65,8 +62,10 @@ displayMatches(List<SMAUser> users, context){
           child: Icon(
             Icons.add,
             color: pmBlue200,
-          )),
-    )
-  );
+          )
+        ),
+      )
+    );
+
   return widgets;
 }

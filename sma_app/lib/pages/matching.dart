@@ -17,12 +17,12 @@ class Matching extends StatelessWidget {
           onPanUpdate: (details) {
             // Swiping in right direction.
             if (details.delta.dx > 0) {
-              log("right");
+              print("right");
             }
 
             // Swiping in left direction.
             if (details.delta.dx < 0) {
-              log("left");
+              print("left");
             }
           },
           child: Column(

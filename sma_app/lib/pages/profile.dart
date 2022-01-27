@@ -12,11 +12,10 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final userservice = UserService();
     final user = userservice.currentUser();
     return Container(
-      child: SingleChildScrollView(
+        child: SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,11 +48,12 @@ class Profile extends StatelessWidget {
           ),
           header("eigene Beschreibung"),
           body(user.description),
-          header("Hobbys"),
+          header("Tags"),
+          subHeader("Hobbys"),
           createTagList(user.hobbies),
-          header("Eigenschaften"),
+          subHeader("Eigenschaften"),
           createTagList(user.attributes),
-          header("Skills"),
+          subHeader("Skills"),
           createTagList(user.skills),
           header("Geburtsdatum"),
           body(convertDateToLocalString(user.dateOfBirth)),
@@ -66,7 +66,8 @@ class Profile extends StatelessWidget {
               children: [
                 Icon(Icons.male),
                 Text(user.sex,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
               ],
             ),
           ),
@@ -81,14 +82,18 @@ class Profile extends StatelessWidget {
     ));
   }
 
-  String convertDateToLocalString(DateTime date){
+  String convertDateToLocalString(DateTime date) {
     final DateFormat formatter = DateFormat('dd.MM.yyyy');
     return formatter.format(date);
   }
 
-  Wrap createTagList(List<TagAble> tags){
-    return Wrap(
-      children: tags.map((tagable) => tag(tagable.value, tagable.color)).toList(),
+  Padding createTagList(List<TagAble> tags) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15),
+      child: Wrap(
+        children:
+            tags.map((tagable) => tag(tagable.value, tagable.color)).toList(),
+      ),
     );
   }
 
@@ -106,6 +111,16 @@ class Profile extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(color: headerColor, fontSize: 20),
+      ),
+    );
+  }
+
+  Padding subHeader(String text) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 10, 0, 5),
+      child: Text(
+        text,
+        style: TextStyle(color: headerColor, fontSize: 15),
       ),
     );
   }

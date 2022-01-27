@@ -14,33 +14,38 @@ class MatchCard extends StatelessWidget {
     SMAUser user = UserService().getUserById(this.userId);
     return SizedBox(
       width: 160,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(13.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(2.0),
-                child: Image.network(
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmBHH1Yy6AQLSRiSNL5aooH8vsmmgDyWgNmyYIkcG5ieAKJ7FUCDXj1AE9-NrMZ1oew_w&usqp=CAU",
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/chat');
+        },
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(13.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(2.0),
+                  child: Image.network(
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmBHH1Yy6AQLSRiSNL5aooH8vsmmgDyWgNmyYIkcG5ieAKJ7FUCDXj1AE9-NrMZ1oew_w&usqp=CAU",
+                  ),
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                child: LinearProgressIndicator(
-                  value: 0.3,
-                  minHeight: 2,
-                  backgroundColor: Colors.grey[200],
-                  color: pmBlue200,
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                  child: LinearProgressIndicator(
+                    value: 0.3,
+                    minHeight: 2,
+                    backgroundColor: Colors.grey[200],
+                    color: pmBlue200,
+                  ),
                 ),
-              ),
-              Text(
-                user.firstName + " " + user.lastName,
-                style: TextStyle(color: headerColor),
-              )
-            ],
+                Text(
+                  user.firstName + " " + user.lastName,
+                  style: TextStyle(color: headerColor),
+                )
+              ],
+            ),
           ),
         ),
       ),
