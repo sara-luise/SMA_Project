@@ -2,12 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:sma_app/colors.dart';
+import 'package:sma_app/models/user.dart';
+import 'package:sma_app/services/userservice.dart';
 
 class MatchCard extends StatelessWidget {
-  const MatchCard({Key? key}) : super(key: key);
+  final int userId;
+  const MatchCard({Key? key, this.userId = 1}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SMAUser user = UserService().getUserById(this.userId);
     return SizedBox(
       width: 160,
       child: Card(
@@ -33,7 +37,7 @@ class MatchCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "Mini Mouse",
+                user.firstName + " " + user.lastName,
                 style: TextStyle(color: headerColor),
               )
             ],

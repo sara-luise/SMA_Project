@@ -14,8 +14,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final userservice = UserService();
-    final user = userservice.getUserById(0);
-    List<TagAble> testData = userservice.createHobbies();
+    final user = userservice.currentUser();
     return Container(
       child: SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 18),
@@ -73,7 +72,6 @@ class Profile extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              print("logout");
               await AuthService().logout();
             },
             child: Text("Logout")

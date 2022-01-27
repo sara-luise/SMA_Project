@@ -23,8 +23,6 @@ class Wrapper extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot){
-        print("UPDATED THE STUFF IN THE SUFF-----------------------------------------------");
-        print(FirebaseAuth.instance.currentUser);
         if(FirebaseAuth.instance.currentUser != null){
           return MaterialApp(
             debugShowCheckedModeBanner: false,
