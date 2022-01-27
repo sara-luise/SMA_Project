@@ -32,7 +32,7 @@ class Wrapper extends StatelessWidget {
             routes: {
               '/': (context) => const Home(),
               '/matching': (context) => const Matching(),
-              '/chat': (context) => const Chat(),
+              '/chat': (context) => Chat(),
             }
           );
         }

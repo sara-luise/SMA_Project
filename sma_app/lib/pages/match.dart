@@ -36,8 +36,8 @@ displayMatches(List<SMAUser> users, context){
   }
   widgets.add(
     SizedBox(
-      width: 150,
-      height: 189,
+      width: 140,
+      height: 180,
       child: OutlinedButton(
           onPressed: () {
             Navigator.pushNamed(context, '/matching');

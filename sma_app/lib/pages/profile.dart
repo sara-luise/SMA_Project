@@ -71,12 +71,24 @@ class Profile extends StatelessWidget {
               ],
             ),
           ),
-          TextButton(
-            onPressed: () async {
-              await AuthService().logout();
-            },
-            child: Text("Logout")
+          Align(
+            alignment: Alignment.topCenter,
+            child: TextButton(
+              onPressed: () {
+                AuthService().logout();
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: pmBlue200),
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    "log out",
+                    style: TextStyle(fontSize: 22),
+                  )
+                ),
             ),
+          ),
         ],
       ),
     ));

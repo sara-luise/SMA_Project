@@ -1,3 +1,4 @@
+import 'package:sma_app/models/message.dart';
 import 'package:sma_app/models/tagable.dart';
 
 class SMAUser {
@@ -11,6 +12,7 @@ class SMAUser {
   final List<TagAble> attributes;
   final List<TagAble> skills;
   final String sex;
+  final List<Message> messages;
 
-  SMAUser(this.hobbies, this.firstName, this.lastName, this.description, this.dateOfBirth, this.hometown, this.id, this.attributes, this.skills, this.sex);
+  SMAUser(this.hobbies, this.firstName, this.lastName, this.description, this.dateOfBirth, this.hometown, this.id, this.attributes, this.skills, this.sex, this.messages);
 }

@@ -1,44 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:sma_app/components/clipImage.dart';
+import 'package:sma_app/models/user.dart';
+import 'package:sma_app/services/authservice.dart';
+import 'package:sma_app/services/userservice.dart';
 
 class Contacts extends StatelessWidget {
   const Contacts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      createContactListItem(context, "Rita Skeeter",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Romilda Vain",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Minerva McGonagall",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Maulende Myrte",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Ron Weasly",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Franz Schörg",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Filip Huber",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Harry Potter",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Hermine Granger",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Max Mitter",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Oliver Wood",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-      createContactListItem(context, "Viktor Krum",
-          "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
-    ]);
+    return ListView(children: createContactList(context));
   }
 
-  GestureDetector createContactListItem(
-      BuildContext context, String name, String imagePath) {
+  List<Widget> createContactList(BuildContext context){
+    List<Widget> widgets = [];
+    for(var user in UserService().getUsers()){
+      widgets.add(createContactListItem(context, user, "https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"));
+    }
+    return widgets;
+  }
+
+  GestureDetector createContactListItem(BuildContext context, SMAUser user, String imagePath) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/chat');
+        Navigator.pushNamed(context, '/chat', arguments: user.id);
       },
       child: Row(
         children: [
@@ -58,7 +43,7 @@ class Contacts extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
-                  name,
+                  user.firstName + " " + user.lastName,
                   style: TextStyle(
                     fontSize: 18,
                   ),
