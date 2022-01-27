@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sma_app/colors.dart';
+import 'package:sma_app/components/clipImage.dart';
 import 'package:sma_app/components/messageForms.dart';
 
 TextEditingController _editTextController = TextEditingController();
@@ -13,9 +14,31 @@ class Chat extends StatelessWidget {
     return Scaffold(
       //header
       appBar: AppBar(
-        title: Text(
-          "Maulende Myrte",
-          style: TextStyle(fontWeight: FontWeight.w400),
+        title: Row(
+          children: [
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: ClipPath(
+                  clipper: TriangleClipper(),
+                  child: Image.network(
+                    "https://pbs.twimg.com/profile_images/1068948865477423110/rvexcOpY_400x400.jpg",
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    "Maulende Myrte",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ))
+          ],
         ),
         backgroundColor: Colors.grey[50],
         elevation: 0.15,
