@@ -1,4 +1,4 @@
-import 'package:android_intent/android_intent.dart';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -92,9 +92,10 @@ class UserService {
   getGeoLocation() async {
     // final Geolocator geolocator = Geolocator.get
     if(await Permission.location.serviceStatus.isDisabled){
-      final AndroidIntent intent = new AndroidIntent(
-      action: 'android.permission.ACCESS_FINE_LOCATION',);
+      AndroidIntent intent = new AndroidIntent(action: 'android.settings.LOCATION_SOURCE_SETTINGS', );
       await intent.launch();
+      intent = new AndroidIntent(action: 'android.permission.ACCESS_COARSE_LOCATION', );
+      intent = new AndroidIntent(action: 'android.permission.ACCESS_FINE_LOCATION', );
     }
     if(await Permission.location.request().isGranted){
       Position pos = await determinePosition();
@@ -104,15 +105,6 @@ class UserService {
         return placemark.locality;
       }
     }
-    // if(await Permission.location.isDenied){
-    //   print(status);
-    //   if(!status.isGranted){
-    //     print("NOT GRANTED");
-    //   }
-    // }
-    // else if(await Permission.locationWhenInUse.isGranted){
-    //   // determinePosition();
-    // }
   }
 
   Future<Position> determinePosition() async {
