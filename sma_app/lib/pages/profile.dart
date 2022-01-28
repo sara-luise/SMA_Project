@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sma_app/colors.dart';
@@ -7,9 +8,15 @@ import 'package:sma_app/models/tagable.dart';
 import 'package:sma_app/services/authservice.dart';
 import 'package:sma_app/services/userservice.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+class Profile extends StatefulWidget {
+  Profile({Key? key}) : super(key: key);
+  String location = "";
 
+  @override
+  ProfileState createState() => ProfileState();
+}
+
+class ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final userservice = UserService();
@@ -58,7 +65,19 @@ class Profile extends StatelessWidget {
           header("Geburtsdatum"),
           body(convertDateToLocalString(user.dateOfBirth)),
           header("Wohnort"),
-          body(user.hometown),
+          Row(
+            children: [
+              Icon(Icons.location_city),
+              Text(widget.location.length > 0 ? widget.location : user.hometown, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
+              ElevatedButton(onPressed: () async {
+                  String newLocation = await UserService().getGeoLocation();
+                this.setState(() {
+                  widget.location = newLocation;
+                });
+              }, child: Text("ReloadLocation", style: TextStyle(color: Colors.black),)),
+            ],
+          ),
+          // body(user.hometown),
           header("Geschlecht"),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -93,7 +112,8 @@ class Profile extends StatelessWidget {
       ),
     ));
   }
-
+  
+}
   String convertDateToLocalString(DateTime date) {
     final DateFormat formatter = DateFormat('dd.MM.yyyy');
     return formatter.format(date);
@@ -136,4 +156,4 @@ class Profile extends StatelessWidget {
       ),
     );
   }
-}
+

@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
         child: SafeArea(
           child: IndexedStack(
             index: _currentIndex,
-            children: const [
+            children: [
               Match(),
               Contacts(),
               Profile(),
